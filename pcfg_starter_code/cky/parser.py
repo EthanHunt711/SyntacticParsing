@@ -19,11 +19,12 @@ def argmax(lst):
 def backtrace(back, bp):
     # ADD YOUR CODE HERE
     # Extract the tree from the backpointers
-
+    pass
 
 def CKY(pcfg, norm_words):
     # ADD YOUR CODE HERE
     # IMPLEMENT CKY
+    pass
 
     # NOTE: norm_words is a list of pairs (norm, word), where word is the word 
     #       occurring in the input sentence and norm is either the same word, 
