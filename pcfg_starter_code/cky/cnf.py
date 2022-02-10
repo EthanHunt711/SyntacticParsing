@@ -1,12 +1,36 @@
+import sys
 from sys import stdin, stderr
 from json import loads, dumps
 
+
 def cnf(tree):
-    # CODE REMOVED
+    if len(tree) == 2:
+        if type(tree[1]) == str:
+            return tree
+        # list contains two items, string and list
+        else:
+            new_tree = []
+            new_tree.append(f"{tree[0]}+{tree[1][0]}")
+            new_tree.extend(tree[1][1:])
+            return cnf(new_tree)
+    # list contains three symbols, string, list, list
+    elif len(tree) == 3:
+        if type(tree[1:]) is list:
+            return [tree[0], cnf(tree[1]), cnf(tree[2])]
+    # List contains more than three symbols, string, list,  list, list, ...
+    elif len(tree) > 3:
+        if type(tree[1:]) is list:
+            new_tree_2 = []
+            sub_tree_1 = []
+            new_tree_2.append(tree[0])
+            new_tree_2.append(tree[1])
+            sub_tree_1.append(f'{tree[0]}|{tree[1][0]}')
+            sub_tree_1.extend(tree[2:])
+            new_tree_2.append(sub_tree_1)
+            return cnf(new_tree_2)
+    else:
+        return print('it is an empty list')
 
-    # INSERT YOUR CODE HERE!
-
-    pass
 
 def is_cnf(tree):
     n = len(tree)
@@ -17,6 +41,7 @@ def is_cnf(tree):
     else:
         return False
 
+
 def words(tree):
     if isinstance(tree, str):
         return [tree]
@@ -26,8 +51,8 @@ def words(tree):
             ws = ws + words(t)
         return ws
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     for line in stdin:
         tree = loads(line)
         sentence = words(tree)
@@ -41,5 +66,3 @@ if __name__ == "__main__":
             print("Input: " + input, file=stderr)
             print("Output: " + str(dumps(tree)), file=stderr)
             exit()
-
-
