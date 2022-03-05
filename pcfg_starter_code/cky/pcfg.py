@@ -35,7 +35,8 @@ class PCFG:
             self.N.update(set([x, y1]))
             self.unary_rules[x].append((y1))
 
-    
+        #print(self.q1)
+
     def learn_from_treebank(self, treebank):
         self.sym_count = Counter()
         self.unary_count = Counter()
