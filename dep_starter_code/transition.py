@@ -22,24 +22,20 @@ def print_tree(root, arcs, words, indent):
 
 def transition(trans, stack, buffer, arcs):
     # add code for missing transitions: (RE, "_"), (RA, label), (LA, label)
-    print(trans, stack, buffer, arcs)
     if trans[0] == LA:
-        for (h, d, l) in arcs:
-            if stack[0] != d:
-                if h != 0:
-                    arcs.append([(stack[1], stack[0], l) for l in labels])
-                    stack.pop(0)
+        arcs.append((buffer[0], stack[0], trans[1]))
+        stack.pop(0)
 
     elif trans[0] == RA:
-        arcs.append([(stack[0], stack[1], l) for l in labels])
+        arcs.append((stack[0], buffer[0], trans[1]))
+        stack.insert(0, buffer.pop(0))
 
     elif trans[0] == RE:
-        for (h, d, l) in arcs:
-            if stack[0] == d:  # if the top word in stack is in arcs as a dependent
-                stack.pop(0)
+        stack.pop(0)
 
     elif trans[0] == SH:
         stack.insert(0, buffer.pop(0))
+
     return stack, buffer, arcs
 
 
