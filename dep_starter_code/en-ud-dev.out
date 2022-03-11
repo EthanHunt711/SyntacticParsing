@@ -448,12 +448,12 @@ as	SCONJ	12	mark
 you	PRON	12	nsubj
 'd	AUX	12	aux
 imagine	VERB	0	root
-:	PUNCT	8	punct
+:	PUNCT	0	root
 Sergey	PROPN	15	name
 Brin	PROPN	18	nsubj
 has	AUX	18	aux
 actually	ADV	18	advmod
-created	VERB	8	parataxis
+created	VERB	0	root
 a	DET	22	det
 mathematical	ADJ	22	amod
 '	PUNCT	22	punct
@@ -490,7 +490,7 @@ good	ADJ	54	amod
 ,	PUNCT	54	punct
 respectable	ADJ	54	amod
 idea	NOUN	22	acl
-.	PUNCT	8	punct
+.	PUNCT	0	root
 
 Read	VERB	0	root
 the	DET	4	det
@@ -557,7 +557,7 @@ of	ADP	27	case
 negotiations	NOUN	25	nmod
 remained	VERB	15	advcl
 rocky	ADJ	28	xcomp
-.	PUNCT	8	punct
+.	PUNCT	0	root
 
 The	DET	4	det
 continued	VERB	4	amod
@@ -665,7 +665,7 @@ Laden	PROPN	28	nmod
 for	ADP	34	case
 their	PRON	34	nmod:poss
 cues	NOUN	28	nmod
-.	PUNCT	25	punct
+.	PUNCT	0	root
 
 Even	ADV	6	advmod
 if	SCONJ	6	mark
@@ -2805,8 +2805,8 @@ fearing	VERB	0	root
 death	NOUN	9	dobj
 ,	PUNCT	9	punct
 basically	ADV	9	advmod
-.	PUNCT	5	punct
-"	PUNCT	5	punct
+.	PUNCT	0	root
+"	PUNCT	0	root
 
 Chahine	PROPN	2	nsubj
 said	VERB	0	root
@@ -11982,7 +11982,7 @@ box	NOUN	4	appos
 ,	PUNCT	7	punct
 carrier	NOUN	4	appos
 ,	PUNCT	0	root
-ect	X	9	advmod
+ect	X	0	root
 .	PUNCT	2	punct
 
 Needs	VERB	0	root
@@ -16409,7 +16409,7 @@ Bell	PROPN	8	conj
 ,	PUNCT	8	punct
 Wendy	PROPN	8	conj
 s	PART	17	case
-?	PUNCT	6	punct
+?	PUNCT	0	root
 
 Burger	PROPN	2	compound
 King	PROPN	0	root
@@ -16478,7 +16478,7 @@ please	INTJ	10	discourse
 give	VERB	3	advcl
 me	PRON	10	dobj
 as	ADV	13	advmod
-much	ADV	17	amod
+much	ADV	0	root
 as	SCONJ	16	mark
 you	PRON	16	nsubj
 have	VERB	0	root
@@ -16748,7 +16748,7 @@ Out	ADP	8	case
 of	ADP	8	case
 the	DET	8	det
 650	NUM	5	compound
-k	NUM	8	nummod
+k	NUM	0	root
 est	VERB	0	root
 stolen	VERB	8	amod
 works	NOUN	0	root
@@ -17329,7 +17329,7 @@ SX40	PROPN	12	nsubj
 only	ADV	12	advmod
 3200	NUM	0	root
 )	PUNCT	0	root
-,	PUNCT	8	punct
+,	PUNCT	0	root
 faster	ADJ	16	amod
 lens	NOUN	4	list
 at	ADP	18	case
@@ -17975,13 +17975,13 @@ age	NOUN	16	nmod
 ,	PUNCT	0	root
 I	PRON	22	nsubj
 was	AUX	22	aux
-wondering	VERB	7	parataxis
+wondering	VERB	0	root
 if	SCONJ	26	mark
 air	PROPN	25	compound
 asia	PROPN	26	nsubj
 recruits	VERB	22	ccomp
 foreigners	NOUN	26	dobj
-?	PUNCT	7	punct
+?	PUNCT	0	root
 
 thanks	NOUN	0	root
 
@@ -19163,7 +19163,7 @@ city	NOUN	3	nmod
 .	PUNCT	3	punct
 
 As	ADV	2	advmod
-long	ADV	16	advmod
+long	ADV	0	root
 as	SCONJ	7	mark
 you	PRON	7	nsubj
 are	VERB	7	cop
@@ -19795,7 +19795,7 @@ that	PRON	20	nmod
 you	PRON	20	nsubj
 pay	VERB	17	acl:relcl
 for	ADP	0	root
-monthly	ADV	20	advmod
+monthly	ADV	0	root
 that	PRON	24	nsubj
 gets	VERB	17	acl:relcl
 wifi	NOUN	24	dobj
@@ -22148,12 +22148,12 @@ Not	PART	2	neg
 friendly	ADJ	0	root
 ,	PUNCT	0	root
 not	PART	5	neg
-helpful	ADJ	2	conj
+helpful	ADJ	0	root
 ,	PUNCT	0	root
 overall	ADV	8	advmod
 poor	ADJ	10	amod
 customer	NOUN	10	compound
-service	NOUN	2	conj
+service	NOUN	0	root
 .	PUNCT	0	root
 
 Definitely	ADV	3	advmod
@@ -25413,7 +25413,7 @@ here	ADV	4	advmod
 and	CONJ	2	cc
 if	SCONJ	8	mark
 ever	ADV	9	advmod
-back	ADV	17	advcl
+back	ADV	0	root
 in	ADP	12	case
 the	DET	12	det
 area	NOUN	0	root

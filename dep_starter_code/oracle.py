@@ -53,43 +53,55 @@ def print_tree(root, arcs, words, indent):
 
 
 def transition(trans, stack, buffer, arcs):
+    dep_in_arc = []
+    for (h, d, l) in arcs:
+        dep_in_arc.append(d)
+
     if trans[0] == LA:
-        arcs.append((buffer[0], stack[0], trans[1]))
-        stack.pop(0)
+        if not stack[0] in dep_in_arc:
+            if stack[0] != 0:
+                arcs.append((buffer[0], stack[0], trans[1]))
+                stack.pop(0)
 
     elif trans[0] == RA:
         arcs.append((stack[0], buffer[0], trans[1]))
         stack.insert(0, buffer.pop(0))
 
     elif trans[0] == RE:
+        # if stack[0] in dep_in_arc:
         stack.pop(0)
 
-    elif trans[0] == SH:
+    else:
         stack.insert(0, buffer.pop(0))
 
     return stack, buffer, arcs
 
 
-def find_head(list_sliced, head):
-    for k in list_sliced:
-        if k == head:
+def buffer_zero_as_head(stack_zero, buffer_zero, heads):
+    for k in range(stack_zero):
+        if heads[k] == buffer_zero:
+            return True
+
+
+def buffer_zero_as_dependent(stack_zero, buffer_zero, heads):
+    for k in range(stack_zero):
+        if heads[buffer_zero] == k:
             return True
 
 
 def oracle(stack, buffer, heads, labels):
-    #  add code for missing transitions: (RE, "_"), (RA, label), (LA, label)
-    prediction = None
+    # add code for missing transitions: (RE, "_"), (RA, label), (LA, label)
+    # prediction = None
     if heads[stack[0]] == buffer[0]:
-        prediction = (LA, labels[stack[0]], 'LA')
+        prediction = (LA, labels[stack[0]])
 
     elif heads[buffer[0]] == stack[0]:
-        prediction = (RA, labels[buffer[0]], 'RA')
+        prediction = (RA, labels[buffer[0]])
 
-    elif heads[buffer[0]] in stack[1:] or find_head(stack[1:], buffer[0]) is True:
-        print(f'stack[1:] is {stack[1:]}')
-        prediction = (RE, "_", 'RE')
+    elif buffer_zero_as_dependent(stack[0], buffer[0], heads) or buffer_zero_as_head(stack[0], buffer[0], heads):
+        prediction = (RE, "_")
     else:
-        prediction = (SH, "_", 'SH')
+        prediction = (SH, "_")
 
     return prediction
 
@@ -103,16 +115,13 @@ def parse(sentence):
     stack = [0]
     buffer = [x for x in range(1, len(words))]
     arcs = []
-    print(f'stack is {stack}')
-    print(f'buffer is {buffer}')
-    print(f'heads is {heads}')
-    print(f'labels is {labels}')
 
     while buffer:
         trans = oracle(stack, buffer, heads, labels)
-        print(trans)
+        # print(trans)
+        # print(heads)
         stack, buffer, arcs = transition(trans, stack, buffer, arcs)
-        print(stack, buffer, arcs)
+        # print(stack, buffer, arcs)
     attach_orphans(arcs, len(words))
     if tab_format:
         print_tab(arcs, words, tags)

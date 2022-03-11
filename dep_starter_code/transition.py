@@ -22,18 +22,31 @@ def print_tree(root, arcs, words, indent):
 
 def transition(trans, stack, buffer, arcs):
     # add code for missing transitions: (RE, "_"), (RA, label), (LA, label)
+    dep_in_arc = []
+    for (h, d, l) in arcs:
+        dep_in_arc.append(d)
+
     if trans[0] == LA:
-        arcs.append((buffer[0], stack[0], trans[1]))
-        stack.pop(0)
+        # dependents_la = []
+        # for (h, d, l) in arcs:
+        #     dependents_la.append(d)
+        if not stack[0] in dep_in_arc:
+            if stack[0] != 0:
+                arcs.append((buffer[0], stack[0], trans[1]))
+                stack.pop(0)
 
     elif trans[0] == RA:
         arcs.append((stack[0], buffer[0], trans[1]))
         stack.insert(0, buffer.pop(0))
 
     elif trans[0] == RE:
-        stack.pop(0)
+        # dependents_re = []
+        # for (h, d, l) in arcs:
+        #     dependents_re.append(d)
+        if stack[0] in dep_in_arc:
+            stack.pop(0)
 
-    elif trans[0] == SH:
+    else:
         stack.insert(0, buffer.pop(0))
 
     return stack, buffer, arcs
