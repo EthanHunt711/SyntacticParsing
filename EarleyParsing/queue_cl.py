@@ -1,14 +1,14 @@
-"""This class is derived from Milner's 'Problem Solving with Algorithms'(2013) """
+"""This class is inspired by the definition in Milner's 'Problem Solving with Algorithms'(2013) """
 
 
 class Queue:
     def __init__(self):
-        self.items = []
+        self.items = []  # defining the queue object as a list
 
-    def __getitem__(self, position):
+    def __getitem__(self, position):  # in order to be able to use []
         return self.items[position]
 
-    def is_empty(self):
+    def is_empty(self):  # whether queue is empty
         return self.items == []
 
     def enqueue(self, item, position):

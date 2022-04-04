@@ -3,12 +3,14 @@ from state_cl import State
 
 AXIOM = 1; PREDICTOR = 2; SCANNER = 3; COMPLETE = 4;
 
+"""Earley parsing class containing the operations and the parser"""
+
 
 class EarleyOperations:
     def __init__(self, words, grammar):
         self.grammar = grammar
         self.words = words
-        self.chart = [Queue() for _ in range(len(words)+1)]
+        self.chart = [Queue() for _ in range(len(words)+1)]  # the chart is a list of queues/instances of Queue class
 
     def predictor(self, state):
         for post_dot_grammar_rule in self.grammar[state.after_dot()]:
@@ -49,43 +51,43 @@ class EarleyOperations:
                                                                              'Completer'),
                                                                        state.subtree_end_position)
 
-    def is_pos(self, state):
+    def is_pos(self, state):  # a method for checking whether in a given state the dot is at a POS tag
         if self.grammar[state.after_dot()] in self.words:
             return True
         return False
 
     def earley_parser(self):
 
-        self.chart[0].enqueue(State(0, 'gamma', ['S'], 0, 0, 0, [], 'Axiom'), 0)
+        self.chart[0].enqueue(State(0, 'gamma', ['S'], 0, 0, 0, [], 'Axiom'), 0)  # the dummy first state
 
         for i in range(len(self.words)):
             for n, state_p in enumerate(self.chart[i]):
                 # self.predictor(state)
                 if state_p.complete(state_p.dot_idx) is False and self.is_pos(state_p) is False:
                     self.predictor(state_p)
-                    print('No1')
-                    print(f'iter{n}')
+                    # print('No1')
+                    # print(f'iter{n}')
                 elif state_p.complete(state_p.dot_idx) is False and self.is_pos(state_p) is True:
                     self.scanner(state_p)
-                    print('No2')
+                    # print('No2')
                 else:
                     self.completer(state_p)
-                    print('No3')
+                    # print('No3')
         return self.chart
 
-    def __str__(self):
-        res = ''
+    def __str__(self):  # a string  for the output of the chart
+        out_print_state = ''
 
         for i, chart in enumerate(self.chart):
-            res += '\nChart[%d]\n' % i
-            for state in chart:
-                res += str(state) + '\n'
+            out_print_state += f'\nChart{i}\n'
+            for state_o in chart:
+                out_print_state += str(state_o) + '\n'
 
-        return res
+        return out_print_state
 
 
-def test():
-    grammar = {
+def test_parser():  # a test method containing a dummy grammar and a sequence of words
+    dummy_grammar = {
         'S': [['NP', 'VP'], ['Aux', 'NP', 'VP'], ['VP']],
         'NP': [['Det', 'Nominal'], ['Proper-Noun']],
         'Nominal': [['Noun'], ['Noun', 'Nominal']],
@@ -97,13 +99,12 @@ def test():
         'Prep': ['from', 'to', 'on'],
         'Proper-Noun': ['Houston', 'TWA']
     }
-    # terminals = ['Det', 'Noun', 'Verb', 'Aux', 'Prep', 'Proper-Noun']
 
-    earley = EarleyOperations(['book', 'that', 'flight'], grammar)
+    earley = EarleyOperations(['book', 'that', 'flight'], dummy_grammar)
     earley.earley_parser()
     print(earley)
 
 
 if __name__ == '__main__':
-    test()
+    test_parser()
     # pass
