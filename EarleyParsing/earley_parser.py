@@ -50,9 +50,8 @@ class EarleyOperations:
                                                                        state.subtree_end_position)
 
     def is_pos(self, state):
-        for word in self.words:
-            if word in self.grammar[state.grammar_rule[0]]:
-                return True
+        if self.grammar[state.after_dot()] in self.words:
+            return True
         return False
 
     def earley_parser(self):
@@ -60,16 +59,17 @@ class EarleyOperations:
         self.chart[0].enqueue(State(0, 'gamma', ['S'], 0, 0, 0, [], 'Axiom'), 0)
 
         for i in range(len(self.words)):
-            for state in self.chart[i]:
+            for n, state_p in enumerate(self.chart[i]):
                 # self.predictor(state)
-                if state.complete(state.dot_idx) is False and self.is_pos(state) is False:
-                    self.predictor(state)
+                if state_p.complete(state_p.dot_idx) is False and self.is_pos(state_p) is False:
+                    self.predictor(state_p)
                     print('No1')
-                elif state.complete(state.dot_idx) is False and self.is_pos(state) is True:
-                    self.scanner(state)
+                    print(f'iter{n}')
+                elif state_p.complete(state_p.dot_idx) is False and self.is_pos(state_p) is True:
+                    self.scanner(state_p)
                     print('No2')
                 else:
-                    self.completer(state)
+                    self.completer(state_p)
                     print('No3')
         return self.chart
 
