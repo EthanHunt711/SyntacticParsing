@@ -9,6 +9,8 @@ from nltk.grammar import Nonterminal
 from nltk.grammar import CFG
 from nltk.grammar import PCFG
 
+
+
 pcfg_dict = defaultdict(float)
 
 
@@ -116,14 +118,12 @@ def save_model(path, diction):
 
 if __name__ == '__main__':
 
-    if len(argv) != 2:
-        print("usage: python3 treebank_grammar.py GRAMMAR")
+    if len(argv) != 3:
+        print("usage: python3 treebank_grammar.py number-of-trees GRAMMAR")
         exit()
 
-    grammar_file = argv[1]
-
-    g = extract_simple_pcfg(10)
+    grammar_file = argv[2]
+    number_of_trees = argv[1]
+    g = extract_simple_pcfg(int(number_of_trees))
     ds = to_dict_grammar(g)
-    save_model(argv[1], ds)
-
-    #  to_dict_grammar(g)
+    save_model(grammar_file, ds)
