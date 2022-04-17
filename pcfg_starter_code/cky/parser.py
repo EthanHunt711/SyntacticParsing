@@ -78,9 +78,11 @@ class Parser:
         tree = CKY(self.pcfg, norm_words)
         # tree[0] = tree[0].split("|")[0]
         return tree
-    
+
+
 def display_tree(tree):
     pprint(tree)
+
 
 if __name__ == "__main__":
 
