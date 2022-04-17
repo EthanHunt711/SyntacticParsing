@@ -1,5 +1,6 @@
+"""It is a derived version of the grammar extractor used in a 2016 assignment by J. Nivre"""
 from sys import argv, stderr
-from json import loads, dumps
+from json import dumps
 from collections import defaultdict
 from time import time
 from nltk import grammar
@@ -124,6 +125,12 @@ if __name__ == '__main__':
 
     grammar_file = argv[2]
     number_of_trees = argv[1]
+
+    start = time()
+    print("Extracting grammar from " + number_of_trees + " trees from Penn Treebank...", file=stderr)
+
     g = extract_simple_pcfg(int(number_of_trees))
     ds = to_dict_grammar(g)
     save_model(grammar_file, ds)
+
+    print("Time: %.2fs\n" % (time() - start), file=stderr)
