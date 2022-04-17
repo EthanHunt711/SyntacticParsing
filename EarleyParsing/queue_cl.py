@@ -11,11 +11,11 @@ class Queue:
     def is_empty(self):  # whether queue is empty
         return self.items == []
 
-    def enqueue(self, item, position):
-        self.item = item
-        self.position = position
-        if item not in self.items:
-            self.items.insert(position, item)
+    def enqueue(self, item, position, chart):
+        if item not in chart[position]:
+            chart[position].append(item)
+        else:
+            self.current_id -= 1
 
     def dequeue(self):
         return self.items.pop()
