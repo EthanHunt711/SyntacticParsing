@@ -120,7 +120,7 @@ def save_model(path, diction):
 if __name__ == '__main__':
 
     if len(argv) != 3:
-        print("usage: python3 treebank_grammar.py number-of-trees GRAMMAR")
+        print("usage: python3 treebank_grammar.py number-of-trees OUTFILE")
         exit()
 
     grammar_file = argv[2]
