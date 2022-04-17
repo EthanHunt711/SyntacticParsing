@@ -1,7 +1,8 @@
-from queue_cl import Queue
+import sys
+from sys import argv, stderr
+from time import time
 from state_cl import State
 from extract_grammar import Grammar
-# AXIOM = 1; PREDICTOR = 2; SCANNER = 3; COMPLETE = 4;
 
 """Earley parsing class containing the operations and the parser"""
 
@@ -10,7 +11,6 @@ class EarleyOperations:
     def __init__(self, words, grammar, pos_tags):
         self.grammar = grammar
         self.words = words
-        # self.chart = [Queue() for _ in range(len(words)+1)]  # the chart is a list of queues/instances of Queue class
         self.chart = [[] for _ in range(len(words) + 1)]
         self.current_id = 0
         self.pos_tags = pos_tags
@@ -25,7 +25,8 @@ class EarleyOperations:
         self.current_id += 1
         return self.current_id - 1
 
-    def is_pos(self, rhs_symbol):  # a method for checking whether in a given state the rhs is a POS or returns a terminal
+    # a class method for checking whether in a given state the rhs is a POS or returns a terminal
+    def is_pos(self, rhs_symbol):
         return rhs_symbol in self.pos_tags
 
     def is_complete(self, state):
@@ -94,31 +95,41 @@ class EarleyOperations:
         return out_print_state
 
 
-def test_parser():  # a test method containing a dummy grammar and a sequence of words
-    # dummy_grammar = {
-    #     'S': [['NP', 'VP'], ['Aux', 'NP', 'VP'], ['VP']],
-    #     'NP': [['Det', 'Nominal'], ['Proper-Noun']],
-    #     'Nominal': [['Noun'], ['Noun', 'Nominal']],
-    #     'VP': [['Verb'], ['Verb', 'NP']],
-    #     'Det': ['that', 'this', 'a'],
-    #     'Noun': ['book', 'flight', 'meal', 'money'],
-    #     'Verb': ['book', 'include', 'prever'],
-    #     'Aux': ['does'],
-    #     'Prep': ['from', 'to', 'on'],
-    #     'Proper-Noun': ['Houston', 'TWA']
-    # }
+def parser():
     g = Grammar('out.dat')
     dummy_grammar = g.extract_grammar()[0]
 
-    # pos_tags = ['Det', 'Noun', 'Verb', 'Aux', 'Prep', 'Proper-Noun']
     pos_tags = g.extract_grammar()[1]
 
-    # earley = EarleyOperations(['book', 'that', 'flight'], dummy_grammar, pos_tags)
-    earley = EarleyOperations(['There', 'is', 'no', 'asbestos', 'in', 'our', 'products', 'now', '.'], dummy_grammar, pos_tags)
+    # in order to simplify only a random sentence among the first 20 sentence of the Penn Treebank is used
+    earley = EarleyOperations(['There', 'is', 'no', 'asbestos', 'in', 'our', 'products', 'now', '.'],
+                              dummy_grammar, pos_tags)
     earley.earley_parser()
+
     print(earley)
 
 
 if __name__ == '__main__':
-    test_parser()
-    # pass
+    if len(argv) != 2:
+        print("usage: python3 earley_parser.py TREEBANK_GRAMMAR")
+        exit()
+
+    in_file = sys.argv[1]
+
+    start = time()
+    print('Parsing initiated .... ')
+
+    g = Grammar(in_file)
+    dummy_grammar = g.extract_grammar()[0]
+
+    pos_tags = g.extract_grammar()[1]
+
+    # in order to simplify only a random sentence among the first 20 sentence of the Penn Treebank is used
+    earley = EarleyOperations(['There', 'is', 'no', 'asbestos', 'in', 'our', 'products', 'now', '.'],
+                              dummy_grammar, pos_tags)
+
+    earley.earley_parser()
+
+    print(earley)
+
+    print("Time: %.2fs\n" % (time() - start), file=stderr)
