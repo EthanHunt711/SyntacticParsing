@@ -12,19 +12,11 @@ class State:
         self.subtree_end_position = subtree_end_position
         self.pointers = pointers
         self.procedure = procedure
-        # pointers = []
-        # grammar_rule = []
 
-    def next_state(self):  # used for numbering the states
-        return self.state_id + 1
-
-    def complete(self, dot_idx):  # check whether the state is complete, the idea is if the dot is 1 then the word
+    def complete(self):  # check whether the state is complete, the idea is if the dot is 1 then the word
         # is prosseced
-        self.dot_idx = dot_idx
-        if dot_idx == 1:
-            return True
-        return False
-
+        return len(self.grammar_rule) == self.dot_idx
+    
     def after_dot(self):  # returns the category after the dot
         return self.grammar_rule[self.dot_idx]
 
@@ -44,6 +36,5 @@ class State:
         if self.dot_idx == len(self.grammar_rule):
             state_mode += '[BULLET]'
             """This part prints out more information than needed for debugging (they will be omitted at the end)"""
-        return f'[S{self.state_id} {self.lhs_symbol} -> {self.dot_idx} {state_mode} {self.grammar_rule} {self.after_dot()}' \
-               f' {self.complete(self.dot_idx)} [{self.subtree_start_position}, ' \
+        return f'[S{self.state_id} {self.lhs_symbol} -> {state_mode} [{self.subtree_start_position} ' \
                f'{self.subtree_end_position}] {self.pointers} {self.procedure}]'
