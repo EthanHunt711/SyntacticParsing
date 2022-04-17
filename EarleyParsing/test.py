@@ -62,20 +62,41 @@ class Earley:
     def predictor(self, state):
         for production in self.grammar[state.next()]:
             self.enqueue(
-                State(state.next(), production, 0, state.end_idx, state.end_idx, self.get_new_id(), [], 'predictor'),
+                State(state.next(),
+                      production,
+                      0,
+                      state.end_idx,
+                      state.end_idx,
+                      self.get_new_id(),
+                      [],
+                      'predictor'),
                 state.end_idx)
 
     def scanner(self, state):
         if self.words[state.end_idx] in self.grammar[state.next()]:
             self.enqueue(
-                State(state.next(), [self.words[state.end_idx]], 1, state.end_idx, state.end_idx + 1, self.get_new_id(),
-                      [], 'scanner'), state.end_idx + 1)
+                State(state.next(),
+                      [self.words[state.end_idx]],
+                      1,
+                      state.end_idx,
+                      state.end_idx + 1,
+                      self.get_new_id(),
+                      [],
+                      'scanner'),
+                state.end_idx + 1)
 
     def completer(self, state):
         for s in self.chart[state.start_idx]:
             if not s.complete() and s.next() == state.label and s.end_idx == state.start_idx and s.label != 'gamma':
-                self.enqueue(State(s.label, s.rules, s.dot_idx + 1, s.start_idx, state.end_idx, self.get_new_id(),
-                                   s.made_from + [state.idx], 'completer'), state.end_idx)
+                self.enqueue(State(s.label,
+                                   s.rules,
+                                   s.dot_idx + 1,
+                                   s.start_idx,
+                                   state.end_idx,
+                                   self.get_new_id(),
+                                   s.made_from + [state.idx],
+                                   'completer'),
+                             state.end_idx)
 
     def parse(self):
         self.enqueue(State('gamma', ['S'], 0, 0, 0, self.get_new_id(), [], 'dummy start state'), 0)
