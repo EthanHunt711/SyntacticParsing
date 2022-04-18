@@ -31,10 +31,10 @@ class State:
         state_mode = ''
         for i, rule in enumerate(self.grammar_rule):
             if i == self.dot_idx:
-                state_mode += '[BULLET]'
-            state_mode += rule + ' '
+                state_mode += '[BULLET]'  # if dot is before
+            state_mode += rule + ' '  # if dot is after
         if self.dot_idx == len(self.grammar_rule):
-            state_mode += '[BULLET]'
+            state_mode += '[BULLET]'  # completed
             # each output of the parsed sentence is presented like this
         return f'[S{self.state_id} {self.lhs_symbol} -> {state_mode} [{self.subtree_start_position} ' \
                f'{self.subtree_end_position}] {self.pointers} {self.procedure}]'
